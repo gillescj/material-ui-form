@@ -1,3 +1,3 @@
 # Material UI form
 
-Little app used to try out [React Hook Form](https://react-hook-form.com/).
+Little app built to try out [React Hook Form](https://react-hook-form.com/).
