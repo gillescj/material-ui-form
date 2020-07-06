@@ -28,11 +28,26 @@ const FormConfirmation = () => {
         alert(JSON.stringify(formValues, null, 4));
     };
 
+    const handleResetClick = () => {
+        setFormValues({
+            firstName: '',
+            lastName: '',
+            email: '',
+            address: '',
+            country: 'ca',
+            city: '',
+            postalCode: '',
+            cellPhone: '',
+            businessPhone: '',
+        });
+    };
+
     return (
         <>
             <Typography className={classes.title} variant="h4">
                 Confirmation
             </Typography>
+
             <form className={classes.form} noValidate onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
@@ -134,7 +149,17 @@ const FormConfirmation = () => {
                             }}
                         />
                     </Grid>
-                    <Grid item xs={12} className={classes.submitButton}>
+                    <Grid item xs={12} sm={3} className={classes.submitButton}>
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            color="secondary"
+                            onClick={() => handleResetClick()}
+                        >
+                            Reset
+                        </Button>
+                    </Grid>
+                    <Grid item xs={12} sm={9} className={classes.submitButton}>
                         <Button
                             fullWidth
                             variant="contained"
