@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     form: {
         marginTop: theme.spacing(3),
     },
+    submitButton: {
+        marginTop: theme.spacing(2),
+    },
 }));
 
 const schema = yup.object().shape({
@@ -47,8 +50,15 @@ const FormLocationInfo = () => {
     const { formValues, setFormValues } = useContext(StoreContext);
 
     const [country, setCountry] = useState(formValues.country);
-    const { register, handleSubmit, errors } = useForm({
+    const { register, handleSubmit, errors, reset } = useForm({
         mode: 'all',
+        defaultValues: {
+            address: formValues.address,
+            city: formValues.city,
+            postalCode: formValues.postalCode,
+            cellPhone: formValues.cellPhone,
+            businessPhone: formValues.businessPhone,
+        },
         resolver: yupResolver(schema),
     });
 
@@ -154,14 +164,14 @@ const FormLocationInfo = () => {
                             }
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} className={classes.submitButton}>
                         <Button
                             fullWidth
                             variant="contained"
-                            color="primary"
+                            color="secondary"
                             type="submit"
                         >
-                            Submit
+                            Save
                         </Button>
                     </Grid>
                 </Grid>
