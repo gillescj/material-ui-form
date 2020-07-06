@@ -1,6 +1,9 @@
 import React from 'react';
-import { TextField, Grid, Typography } from '@material-ui/core';
+import { TextField, Grid, Typography, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers';
+import * as yup from 'yup';
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -14,11 +17,41 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const schema = yup.object().shape({
+    firstName: yup.string().label('First Name').required().max(30),
+    lastName: yup.string().label('Last Name').max(30),
+    email: yup.string().label('Email Address').required().email(),
+    password: yup
+        .string()
+        .label('Password')
+        .required()
+        .min(8)
+        .matches(
+            /^(?=.*[a-z])(?=.*[A-Z])/,
+            'Password must contain capital and lowercase letters'
+        )
+        .matches(/^(?=.*\d)/, 'Password must contain at least one number')
+        .matches(/^(?=.*\W)/, 'Password must contain at least one special character'),
+});
+
 const FormAccountInfo = ({ formValues, setFormValues }) => {
     const classes = useStyles();
 
-    const handleFieldChange = (event, fieldName) => {
-        setFormValues({ ...formValues, [fieldName]: event.target.value });
+    const { register, handleSubmit, errors } = useForm({
+        mode: 'all',
+        defaultValues: {
+            firstName: formValues.firstName,
+            lastName: formValues.lastName,
+            email: formValues.email,
+            password: formValues.password,
+        },
+        resolver: yupResolver(schema),
+    });
+
+    const onSubmit = (formData) => {
+        setFormValues((previousFormValues) => {
+            return { ...previousFormValues, ...formData };
+        });
     };
 
     return (
@@ -26,7 +59,7 @@ const FormAccountInfo = ({ formValues, setFormValues }) => {
             <Typography className={classes.title} variant="h4">
                 Step One
             </Typography>
-            <form className={classes.form} noValidate>
+            <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                         <TextField
@@ -34,8 +67,10 @@ const FormAccountInfo = ({ formValues, setFormValues }) => {
                             required
                             fullWidth
                             label="First Name"
-                            value={formValues.firstName}
-                            onChange={(event) => handleFieldChange(event, 'firstName')}
+                            name="firstName"
+                            inputRef={register}
+                            error={!errors.firstName ? false : true}
+                            helperText={errors.firstName && errors.firstName.message}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -43,8 +78,10 @@ const FormAccountInfo = ({ formValues, setFormValues }) => {
                             variant="filled"
                             fullWidth
                             label="Last Name"
-                            value={formValues.lastName}
-                            onChange={(event) => handleFieldChange(event, 'lastName')}
+                            name="lastName"
+                            inputRef={register}
+                            error={!errors.lastName ? false : true}
+                            helperText={errors.lastName && errors.lastName.message}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -53,8 +90,10 @@ const FormAccountInfo = ({ formValues, setFormValues }) => {
                             required
                             fullWidth
                             label="Email Address"
-                            value={formValues.email}
-                            onChange={(event) => handleFieldChange(event, 'email')}
+                            name="email"
+                            inputRef={register}
+                            error={!errors.email ? false : true}
+                            helperText={errors.email && errors.email.message}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -64,9 +103,21 @@ const FormAccountInfo = ({ formValues, setFormValues }) => {
                             required
                             fullWidth
                             label="Password"
-                            value={formValues.password}
-                            onChange={(event) => handleFieldChange(event, 'password')}
+                            name="password"
+                            inputRef={register}
+                            error={!errors.password ? false : true}
+                            helperText={errors.password && errors.password.message}
                         />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            type="submit"
+                        >
+                            Submit
+                        </Button>
                     </Grid>
                 </Grid>
             </form>
