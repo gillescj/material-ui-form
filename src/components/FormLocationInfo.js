@@ -89,7 +89,6 @@ const FormLocationInfo = () => {
                     <Grid item xs={12}>
                         <TextField
                             variant="filled"
-                            required
                             fullWidth
                             label="Address"
                             name="address"
