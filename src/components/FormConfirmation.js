@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { TextField, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { countriesObject } from 'utils/countries';
+import StoreContext from 'StoreContext';
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -15,8 +16,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const FormConfirmation = ({ formValues, setFormValues }) => {
+const FormConfirmation = () => {
     const classes = useStyles();
+    const { formValues, setFormValues } = useContext(StoreContext);
 
     const handleFieldChange = (event, fieldName) => {
         setFormValues({ ...formValues, [fieldName]: event.target.value });

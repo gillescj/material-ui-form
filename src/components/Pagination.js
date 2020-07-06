@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Grid, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import StoreContext from 'StoreContext';
 
 const useStyles = makeStyles((theme) => ({
     pagination: {
@@ -8,8 +9,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Pagination = ({ formId, page, previousPage, nextPage }) => {
+const Pagination = () => {
     const classes = useStyles();
+
+    const { page, previousPage, nextPage } = useContext(StoreContext);
+
     return (
         <Grid container spacing={2} className={classes.pagination}>
             <Grid item xs={12} sm={4}>

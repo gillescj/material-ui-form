@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { TextField, Grid, Typography, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { countriesList } from 'utils/countries';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
 import * as yup from 'yup';
+import StoreContext from 'StoreContext';
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -41,8 +42,9 @@ const schema = yup.object().shape({
     }),
 });
 
-const FormLocationInfo = ({ formValues, setFormValues }) => {
+const FormLocationInfo = () => {
     const classes = useStyles();
+    const { formValues, setFormValues } = useContext(StoreContext);
 
     const [country, setCountry] = useState(formValues.country);
     const { register, handleSubmit, errors } = useForm({

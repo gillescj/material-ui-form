@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { TextField, Grid, Typography, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
 import * as yup from 'yup';
+import StoreContext from 'StoreContext';
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -34,8 +35,9 @@ const schema = yup.object().shape({
         .matches(/^(?=.*\W)/, 'Password must contain at least one special character'),
 });
 
-const FormAccountInfo = ({ formValues, setFormValues }) => {
+const FormAccountInfo = () => {
     const classes = useStyles();
+    const { formValues, setFormValues } = useContext(StoreContext);
 
     const { register, handleSubmit, errors } = useForm({
         mode: 'all',

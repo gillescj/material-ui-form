@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { AppBar, Toolbar, Typography, Button, makeStyles } from '@material-ui/core';
+import StoreContext from 'StoreContext';
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -7,8 +8,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Header = ({ setFormValues }) => {
+const Header = () => {
     const classes = useStyles();
+
+    const { setFormValues } = useContext(StoreContext);
 
     const handleResetClick = () => {
         setFormValues({
