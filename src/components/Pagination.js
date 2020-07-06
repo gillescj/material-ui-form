@@ -20,7 +20,7 @@ const Pagination = () => {
                 <Button
                     fullWidth
                     variant="contained"
-                    color="secondary"
+                    color="primary"
                     disabled={page <= 1}
                     onClick={() => previousPage()}
                 >
