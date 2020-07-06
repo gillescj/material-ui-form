@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
     form: {
         marginTop: theme.spacing(3),
     },
+    submitButton: {
+        marginTop: theme.spacing(2),
+    },
 }));
 
 const schema = yup.object().shape({
@@ -111,14 +114,14 @@ const FormAccountInfo = () => {
                             helperText={errors.password && errors.password.message}
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} className={classes.submitButton}>
                         <Button
                             fullWidth
                             variant="contained"
-                            color="primary"
+                            color="secondary"
                             type="submit"
                         >
-                            Submit
+                            Save
                         </Button>
                     </Grid>
                 </Grid>
